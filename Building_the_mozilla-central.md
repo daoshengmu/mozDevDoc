@@ -1,5 +1,4 @@
-> test
-
+> This is an edited extract from https://codesugar.wordpress.com/2014/12/13/building-the-mozilla-central
 
 ## Mozilla-Central
 Mozilla-central is the source code of the well-known Firefox-Nightly, which is one version of the firefox browser built for testing the new features. Mozilla-central is actually a Mercurial repository of the Mozilla code: https://hg.mozilla.org/mozilla-central . You can read more information <a name="moz-cen" title="mozilla-central" target="_blank" href="https://developer.mozilla.org/en-US/docs/mozilla-central">here</a>.
