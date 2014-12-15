@@ -1,3 +1,5 @@
+> This is an edited extract from https://codesugar.wordpress.com/2014/12/14/building-and-installing-firefox-os/
+
 ## Firefox OS(B2G)
 
 - https://www.mozilla.org/en-US/firefox/os/
