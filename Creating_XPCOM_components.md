@@ -24,6 +24,15 @@ There is an existing sample code for XPCOM component
 whose interface is **nsISample**.
 The code is in **MOZ_CEN/xpcom/sample**.
 
+- Run the **nsISample** XPCOM component
+
+  - If you never built mozilla-central before
+  <pre>
+  $ ./mach build or ./mach build/ xpcom/
+  </pre>
+
+  - Play it in **xpcshell**
+
 
 ## Creating your own XPCOM component
 
