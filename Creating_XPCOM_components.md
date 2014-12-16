@@ -37,8 +37,8 @@ The code is in **MOZ_CEN/xpcom/sample**.
   $ cd obj-YOUR-TARGET-XXXX/dist/bin
   $ ./run-mozilla.sh ./xpcshell
   </pre>
-  <pre>
-  js> const cSample = new Components.Constructor("@mozilla.org/sample;1", "nsISample");
+<pre>
+js> const cSample = new Components.Constructor("@mozilla.org/sample;1", "nsISample");
 js> var sample = new cSample(); 
 js> sample.writeValue("Hello")
 Hello initial value
@@ -63,8 +63,7 @@ yo!man! high five
 foopy 5
 GetValue 8
 js> quit()
-
-  </pre>
+</pre>
   
 
 ## Creating your own XPCOM component
