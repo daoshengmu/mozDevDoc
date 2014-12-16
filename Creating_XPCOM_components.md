@@ -1,8 +1,9 @@
 ## Prerequisite
 
 Before implementing XPCOM components from this tutorial, 
-you need to get the firefox source code, known as **mozilla-central**,
-denoted by MOZ_CEN (Use Mercurial or Git)
+you need to get the firefox source code, 
+which is known as **mozilla-central**, from Mercurial or Git.
+The path of mozilla-central is denoted by **MOZ_CEN** from here.
 
 - MDN : https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Source_Code/Mercurial
 - Mercurial Menual : https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Source_Code/Mercurial
@@ -32,7 +33,39 @@ The code is in **MOZ_CEN/xpcom/sample**.
   </pre>
 
   - Play it in **xpcshell**
+  <pre>
+  $ cd obj-YOUR-TARGET-XXXX/dist/bin
+  $ ./run-mozilla.sh ./xpcshell
+  </pre>
+  <pre>
+  js> const cSample = new Components.Constructor("@mozilla.org/sample;1", "nsISample");
+js> var sample = new cSample(); 
+js> sample.writeValue("Hello")
+Hello initial value
+foopy 5
+GetValue 8
+js> sample.value
+initial value
+js> sample.poke("nice to see you")
+js> sample.value
+nice to see you
+js> sample.writeValue("yo!man!")
+yo!man! nice to see you
+foopy 5
+GetValue 8
+js> sample.value
+nice to see you
+js> sample.poke("high five");
+js> sample.value
+high five
+js> sample.writeValue("yo!man!");
+yo!man! high five
+foopy 5
+GetValue 8
+js> quit()
 
+  </pre>
+  
 
 ## Creating your own XPCOM component
 
