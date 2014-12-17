@@ -24,6 +24,8 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 There is an existing sample code for XPCOM component 
 whose interface is **nsISample**.
 The code is in **MOZ_CEN/xpcom/sample**.
+You should see all the code in this dictionary(Look nsISample.idl first).
+Take **nsSample.h** as an example here:
 
 <pre>
 $ vim MOZ_CEN/xpcom/sample/nsSample.h
@@ -106,6 +108,19 @@ js> quit()
   
 
 ## Creating your own XPCOM component
+
+- Making a dictionay for this XPCOM component
+- Exposing the dictionary created to mozilla build system
+- Writing a IDL file for your XPCOM component
+  - Generating a UUID as your XPCOM component ID
+  - Writing IDL for XPCOM component
+- Generating the interface and implementation template from the IDL
+- Implementing your XPCOM component from template
+- Module file
+- Javascript file
+- manifest file
+- Building your XPCOM component
+- Testing your XPCOM component in **xpcshell**
 
 
 ## Reference
