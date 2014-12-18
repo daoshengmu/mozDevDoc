@@ -325,7 +325,7 @@ NS_IMETHODIMP nsTest::Mul(int32_t a, int32_t b, int32_t *_retval)
 ```
 
 The template of .h and .cpp is in comment 
-#if 0 /* Header file */ and /* Implementation file */
+/* Header file */ and /* Implementation file */
 
 
 ### Implementing your XPCOM component from the template
