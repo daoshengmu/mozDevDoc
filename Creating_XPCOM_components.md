@@ -1,3 +1,9 @@
+## XPCOM
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Guide/Creating_components/An_Overview_of_XPCOM
+
+## About this article
+This is the implementation note of [Creating XPCOM components](#XPCOM). 
+
 ## Prerequisite
 
 Before implementing XPCOM components, 
