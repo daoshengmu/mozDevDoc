@@ -325,7 +325,7 @@ NS_IMETHODIMP nsTest::Mul(int32_t a, int32_t b, int32_t *_retval)
 ```
 
 The template of .h and .cpp is in comment 
-'/* Header file */' and '/* Implementation file */'
+*Header file* and *Implementation file*.
 
 
 ### Implementing your XPCOM component from the template
@@ -337,6 +337,20 @@ $ vim nsTest.h
 </pre>
 
 ```
+class nsTest : public nsITest
+{
+public:
+  NS_DECL_ISUPPORTS
+  NS_DECL_NSITEST
+
+  nsTest();
+
+private:
+  ~nsTest();
+
+protected:
+  /* additional members */
+};
 ```
 
 <pre>
