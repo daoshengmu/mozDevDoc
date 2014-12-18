@@ -192,14 +192,138 @@ $ ./mach build
 </pre>
 
 
-After building, the interface of your XPCOM componenet will be in **** folder.
+After building, the interface of your XPCOM componenet 
+will be in **MOZ_CEN/obj-xxxxx/dist/include** folder.
 You will see **nsITest.h** there. 
 This file is an interface of your XPCOM componenet, 
 and the template of its implementation is in the comment of it.
 <pre>
-$ vim nsITest.h 
+$ vim MOZ_CEN/obj-xxxxx/dist/include/nsITest.h 
 </pre>
+
 ```
+...
+...
+/*
+ * DO NOT EDIT.  THIS FILE IS GENERATED FROM ../../../dist/idl/nsITest.idl
+ */
+
+#ifndef __gen_nsITest_h__
+#define __gen_nsITest_h__
+
+
+#ifndef __gen_nsISupports_h__
+#include "nsISupports.h"
+#endif
+
+/* For IDL files that don't want to include root IDL files. */
+#ifndef NS_NO_VTABLE
+#define NS_NO_VTABLE
+#endif
+
+/* starting interface:    nsITest */
+#define NS_ITEST_IID_STR "0390037d-9ca2-4d68-b998-4a4245b4d118"
+
+#define NS_ITEST_IID \
+  {0x0390037d, 0x9ca2, 0x4d68, \
+    { 0xb9, 0x98, 0x4a, 0x42, 0x45, 0xb4, 0xd1, 0x18 }}
+
+class NS_NO_VTABLE nsITest : public nsISupports {
+ public: 
+
+  NS_DECLARE_STATIC_IID_ACCESSOR(NS_ITEST_IID)
+
+  /* attribute string value; */
+  NS_IMETHOD GetValue(char * *aValue) = 0;
+  NS_IMETHOD SetValue(const char * aValue) = 0;
+
+  /* void writeValue (in string aPrefix); */
+  NS_IMETHOD WriteValue(const char * aPrefix) = 0;
+
+  /* long add (in long a, in long b); */
+  NS_IMETHOD Add(int32_t a, int32_t b, int32_t *_retval) = 0;
+
+  /* long sub (in long a, in long b); */
+  NS_IMETHOD Sub(int32_t a, int32_t b, int32_t *_retval) = 0;
+
+  /* long mul (in long a, in long b); */
+  NS_IMETHOD Mul(int32_t a, int32_t b, int32_t *_retval) = 0;
+
+};
+
+...
+...
+
+#if 0
+/* Use the code below as a template for the implementation class for this interface. */
+
+/* Header file */
+class nsTest : public nsITest
+{
+public:
+  NS_DECL_ISUPPORTS
+  NS_DECL_NSITEST
+
+  nsTest();
+
+private:
+  ~nsTest();
+
+protected:
+  /* additional members */
+};
+
+/* Implementation file */
+NS_IMPL_ISUPPORTS(nsTest, nsITest)
+
+nsTest::nsTest()
+{
+  /* member initializers and constructor code */
+}
+
+nsTest::~nsTest()
+{
+  /* destructor code */
+}
+
+/* attribute string value; */
+NS_IMETHODIMP nsTest::GetValue(char * *aValue)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+NS_IMETHODIMP nsTest::SetValue(const char * aValue)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* void writeValue (in string aPrefix); */
+NS_IMETHODIMP nsTest::WriteValue(const char * aPrefix)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* long add (in long a, in long b); */
+NS_IMETHODIMP nsTest::Add(int32_t a, int32_t b, int32_t *_retval)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* long sub (in long a, in long b); */
+NS_IMETHODIMP nsTest::Sub(int32_t a, int32_t b, int32_t *_retval)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* long mul (in long a, in long b); */
+NS_IMETHODIMP nsTest::Mul(int32_t a, int32_t b, int32_t *_retval)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* End of implementation class template. */
+#endif
+
+#endif /* __gen_nsITest_h__ */
 ```
 
 ### Implementing your XPCOM component from the template
