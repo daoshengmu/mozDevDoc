@@ -119,10 +119,18 @@ $ mkdir sample2
 $ vim moz.build
 </pre>
 <pre>
-sdasd
 ..
 ..
 if CONFIG['OS_ARCH'] == 'WINNT' and CONFIG['MOZ_DEBUG']:
+DIRS += ['windbgdlg']
+
+TEST_DIRS += [
+    'tests',
+    'sample',
+    'sample2',
+    'typelib/xpt/tests',
+]
+
 </pre>
 
 - Writing a IDL file for your XPCOM component
