@@ -119,23 +119,10 @@ $ mkdir sample2
 $ vim moz.build
 </pre>
 <pre>
-
+sdasd
 ..
 ..
-if CONFIG[&#39;OS_ARCH&#39;] == &#39;WINNT&#39; and CONFIG[&#39;MOZ_DEBUG&#39;]:
-    DIRS += [&#39;windbgdlg&#39;]
-
-TEST_DIRS += [
-    &#39;tests&#39;,
-    &#39;sample&#39;,
-    &#39;sample2&#39;,
-    &#39;typelib/xpt/tests&#39;,
-]
-
-#  Can not build internal xptcall tests that use symbols which are not exported.
-#TEST_DIRS += [
-..
-..
+if CONFIG['OS_ARCH'] == 'WINNT' and CONFIG['MOZ_DEBUG']:
 </pre>
 
 - Writing a IDL file for your XPCOM component
