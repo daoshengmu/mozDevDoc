@@ -141,7 +141,29 @@ TEST_DIRS += [
 
 - Writing a IDL file for your XPCOM component
   - Generating a UUID as your XPCOM component ID
+<pre>
+$ uuidgen
+0390037d-9ca2-4d68-b998-4a4245b4d118
+</pre>
   - Writing IDL for XPCOM component
+<pre>
+$ vim nsITest.idl
+</pre>
+
+```
+#include "nsISupports.idl"
+[scriptable, uuid(0390037d-9ca2-4d68-b998-4a4245b4d118)]
+interface nsITest : nsISupports
+{
+    attribute string value;
+    void writeValue(in string aPrefix);
+    long add(in long a, in long b);
+    long sub(in long a, in long b);
+    long mul(in long a, in long b);
+};
+
+```
+
 - Generating the interface and implementation template from the IDL
 - Implementing your XPCOM component from template
 - Module file
