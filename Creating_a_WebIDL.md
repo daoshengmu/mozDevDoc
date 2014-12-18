@@ -117,10 +117,16 @@ $ mv Hello-example.cpp Hello.cpp
 $ vim Hello.h
 </pre>
 
+```cpp
+```
+
+
 <pre>
 $ vim Hello.cpp
 </pre>
 
+```cpp
+```
 
 
 ### Adding information about your WebIDL to firefox build system
@@ -183,18 +189,13 @@ $ vim testHello.html
     <title>hello test</title>
     <script>
         funcInit = function(){
-            // After DOM has beem loaded....
+            // After DOM has been loaded....
             console.log("DOM has been loaded...");
             var btnElement = document.querySelector('#btn');
             btn.addEventListener('click', clickHandler);
 
         }
         document.addEventListener('DOMContentLoaded', funcInit);
-
-        function sleep(ms){
-            var starttime= new Date().getTime();
-            do{}while((new Date().getTime()-starttime)<ms)
-        }
 
         console.log("test page is starting...");
 
@@ -250,7 +251,12 @@ $ ./mach run testHello.html
 </pre>
 
 After the firefox nightly start running, 
-you need to open the ****(press the <F12> or Rightclick->Inspect Element)
+you need to open the **browser console**.
+You can press **F12** or mouse rightclick->Inspect Element 
+and select **console** to open it.
+
+<pre>
+</pre>
 
 
 ## Reference
