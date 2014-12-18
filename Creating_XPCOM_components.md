@@ -78,6 +78,7 @@ $ ./mach build or ./mach build/ xpcom/
 $ cd obj-YOUR-TARGET-XXXX/dist/bin
 $ ./run-mozilla.sh ./xpcshell
 </pre>
+
 <pre>
 js> const cSample = new Components.Constructor("@mozilla.org/sample;1", "nsISample");
 js> var sample = new cSample(); 
@@ -177,8 +178,11 @@ $ vim moz.build
 ```
 # XPIDL_SOURCES specifies IDL files. The build system runs the xpidl tool
 # on these files to generate C++ headers and .xpt typelib files.
-XPIDL_SOURCES += ['nsISample.idl']
+XPIDL_SOURCES += ['nsITest.idl']
 
+# XPIDL_MODULE specifies where header files from this Makefile are installed,
+# i.e. dist/include/xpcomsample
+XPIDL_MODULE = 'xpcomtest'
 ```
 
 Then, you can generate the interface and template for your XPCOM component.
@@ -188,16 +192,63 @@ $ ./mach build
 </pre>
 
 
+After building, the interface of your XPCOM componenet will be in **** folder.
+You will see **nsITest.h** there. 
+This file is an interface of your XPCOM componenet, 
+and the template of its implementation is in the comment of it.
+<pre>
+$ vim nsITest.h 
+</pre>
+```
+```
 
+### Implementing your XPCOM component from the template
 
-### Implementing your XPCOM component from template
+<pre>
+$ vim nsTest.h 
+</pre>
+
+<pre>
+$ vim nsTest.cpp 
+</pre>
+
 
 
 ### Module file
+
+<pre>
+$ vim nsTestModule.cpp 
+</pre>
+
+
 ### Javascript file
+
+<pre>
+$ vim nsTest.js 
+</pre>
+
 ### manifest file
+
+<pre>
+$ vim nsTest.manifest
+</pre>
+
+
 ### Building your XPCOM component
+
+<pre>
+$ cd MOZ_CEN
+$ ./mach build
+</pre>
+
+
 ### Testing your XPCOM component in **xpcshell**
+
+<pre>
+$ cd obj-YOUR-TARGET-XXXX/dist/bin
+$ ./run-mozilla.sh ./xpcshell
+</pre>
+
 
 
 ## Reference
