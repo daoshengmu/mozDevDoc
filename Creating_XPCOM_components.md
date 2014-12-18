@@ -202,8 +202,6 @@ $ vim MOZ_CEN/obj-xxxxx/dist/include/nsITest.h
 </pre>
 
 ```
-...
-...
 /*
  * DO NOT EDIT.  THIS FILE IS GENERATED FROM ../../../dist/idl/nsITest.idl
  */
@@ -326,11 +324,20 @@ NS_IMETHODIMP nsTest::Mul(int32_t a, int32_t b, int32_t *_retval)
 #endif /* __gen_nsITest_h__ */
 ```
 
+The template of .h and .cpp is in comment 
+#if 0 /* Header file */ and /* Implementation file */
+
+
 ### Implementing your XPCOM component from the template
 
+Creating a .h file in **sample2** folder and completing your code from
+the template /* Header file*/ in nsITest.h
 <pre>
 $ vim nsTest.h 
 </pre>
+
+```
+```
 
 <pre>
 $ vim nsTest.cpp 
