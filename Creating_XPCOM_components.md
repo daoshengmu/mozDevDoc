@@ -437,6 +437,8 @@ private:
 protected:
   /* additional members */
 };
+
+#endif 
 ```
 
 Next, writing the .cpp file
@@ -506,7 +508,7 @@ nsTest::GetValue(char** aValue)
   if (mValue) {
     /**
      * GetValue's job is to return data known by an instance of
-     * nsSampleImpl to the outside world.  If we  were to simply return
+     * nsSample to the outside world.  If we  were to simply return
      * a pointer to data owned by this instance, and the client were to
      * free it, bad things would surely follow.
      * On the other hand, if we create a new copy of the data for our
@@ -618,8 +620,6 @@ nsTest::WriteValue(const char* aPrefix)
 
   return NS_OK;
 }
-
-
 ```
 
 ### Module file
@@ -628,12 +628,164 @@ nsTest::WriteValue(const char* aPrefix)
 $ vim nsTestModule.cpp 
 </pre>
 
+```cpp
+#include "mozilla/ModuleUtils.h"
+#include "nsIClassInfoImpl.h"
+
+#include "nsTest.h"
+
+////////////////////////////////////////////////////////////////////////
+// With the below sample, you can define an implementation glue
+// that talks with xpcom for creation of component nsTest
+// that implement the interface nsITest. This can be extended for
+// any number of components.
+////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////
+// Define the contructor function for the object nsTest
+//
+// What this does is defines a function nsTestConstructor which we
+// will specific in the nsModuleComponentInfo table. This function will
+// be used by the generic factory to create an instance of nsTest.
+//
+// NOTE: This creates an instance of nsTest by using the default
+//         constructor nsTest::nsTest()
+//
+NS_GENERIC_FACTORY_CONSTRUCTOR(nsTest)
+
+// The following line defines a kNS_TEST_CID CID variable.
+NS_DEFINE_NAMED_CID(NS_TEST_CID);
+
+// Build a table of ClassIDs (CIDs) which are implemented by this module. CIDs
+// should be completely unique UUIDs.
+// each entry has the form { CID, service, factoryproc, constructorproc }
+// where factoryproc is usually nullptr.
+static const mozilla::Module::CIDEntry kTestCIDs[] = {
+  { &kNS_TEST_CID, false, nullptr, nsTestConstructor },
+  { nullptr }
+};
+
+// Build a table which maps contract IDs to CIDs.
+// A contract is a string which identifies a particular set of functionality. In some
+// cases an extension component may override the contract ID of a builtin gecko component
+// to modify or extend functionality.
+static const mozilla::Module::ContractIDEntry kTestContracts[] = {
+  { NS_TEST_CONTRACTID, &kNS_TEST_CID },
+  { nullptr }
+};
+
+// Category entries are category/key/value triples which can be used
+// to register contract ID as content handlers or to observe certain
+// notifications. Most modules do not need to register any category
+// entries: this is just a sample of how you'd do it.
+// @see nsICategoryManager for information on retrieving category data.
+static const mozilla::Module::CategoryEntry kTestCategories[] = {
+  { "my-category", "my-key", NS_TEST_CONTRACTID },
+  { nullptr }
+};
+
+static const mozilla::Module kTestModule = {
+  mozilla::Module::kVersion,
+  kTestCIDs,
+  kTestContracts,
+  kTestCategories
+};
+
+// The following line implements the one-and-only "NSModule" symbol exported from this
+// shared library.
+NSMODULE_DEFN(nsTestModule) = &kTestModule;
+
+// The following line implements the one-and-only "NSGetModule" symbol
+// for compatibility with mozilla 1.9.2. You should only use this
+// if you need a binary which is backwards-compatible and if you use
+// interfaces carefully across multiple versions.
+NS_IMPL_MOZILLA192_NSGETMODULE(&kTestModule)
+```
 
 ### Javascript file
 
 <pre>
+$ uuidgen
+217f9cb2-7496-41ea-aa7c-b4270e1ad338
+</pre>
+
+<pre>
 $ vim nsTest.js 
 </pre>
+
+```cpp
+#include "mozilla/ModuleUtils.h"
+#include "nsIClassInfoImpl.h"
+
+#include "nsTest.h"
+
+////////////////////////////////////////////////////////////////////////
+// With the below sample, you can define an implementation glue
+// that talks with xpcom for creation of component nsTest
+// that implement the interface nsITest. This can be extended for
+// any number of components.
+////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////
+// Define the contructor function for the object nsTest
+//
+// What this does is defines a function nsTestConstructor which we
+// will specific in the nsModuleComponentInfo table. This function will
+// be used by the generic factory to create an instance of nsTest.
+//
+// NOTE: This creates an instance of nsTest by using the default
+//         constructor nsTest::nsTest()
+//
+NS_GENERIC_FACTORY_CONSTRUCTOR(nsTest)
+
+// The following line defines a kNS_TEST_CID CID variable.
+NS_DEFINE_NAMED_CID(NS_TEST_CID);
+
+// Build a table of ClassIDs (CIDs) which are implemented by this module. CIDs
+// should be completely unique UUIDs.
+// each entry has the form { CID, service, factoryproc, constructorproc }
+// where factoryproc is usually nullptr.
+static const mozilla::Module::CIDEntry kTestCIDs[] = {
+  { &kNS_TEST_CID, false, nullptr, nsTestConstructor },
+  { nullptr }
+};
+
+// Build a table which maps contract IDs to CIDs.
+// A contract is a string which identifies a particular set of functionality. In some
+// cases an extension component may override the contract ID of a builtin gecko component
+// to modify or extend functionality.
+static const mozilla::Module::ContractIDEntry kTestContracts[] = {
+  { NS_TEST_CONTRACTID, &kNS_TEST_CID },
+  { nullptr }
+};
+
+// Category entries are category/key/value triples which can be used
+// to register contract ID as content handlers or to observe certain
+// notifications. Most modules do not need to register any category
+// entries: this is just a sample of how you'd do it.
+// @see nsICategoryManager for information on retrieving category data.
+static const mozilla::Module::CategoryEntry kTestCategories[] = {
+  { "my-category", "my-key", NS_TEST_CONTRACTID },
+  { nullptr }
+};
+
+static const mozilla::Module kTestModule = {
+  mozilla::Module::kVersion,
+  kTestCIDs,
+  kTestContracts,
+  kTestCategories
+};
+
+// The following line implements the one-and-only "NSModule" symbol exported from this
+// shared library.
+NSMODULE_DEFN(nsTestModule) = &kTestModule;
+
+// The following line implements the one-and-only "NSGetModule" symbol
+// for compatibility with mozilla 1.9.2. You should only use this
+// if you need a binary which is backwards-compatible and if you use
+// interfaces carefully across multiple versions.
+NS_IMPL_MOZILLA192_NSGETMODULE(&kTestModule)
+```
 
 ### manifest file
 
@@ -641,8 +793,63 @@ $ vim nsTest.js
 $ vim nsTest.manifest
 </pre>
 
+```
+component 217f9cb2-7496-41ea-aa7c-b4270e1ad338 nsTest.js
+contract @mozilla.org/jstest;1 217f9cb2-7496-41ea-aa7c-b4270e1ad338
+```
+
+### xpconnect test html
+<pre>
+$ vim xpconnect-test.html
+</pre>
+
+```html
+```
 
 ### Building your XPCOM component
+
+<pre>
+$ vim moz.build
+</pre>
+
+```
+# If you're copying from this file, you'll likely need to replace
+# TEST_DIRS with DIRS.
+#TEST_DIRS += ['program']
+
+# XPIDL_SOURCES specifies IDL files. The build system runs the xpidl tool
+# on these files to generate C++ headers and .xpt typelib files.
+XPIDL_SOURCES += ['nsITest.idl']
+
+# XPIDL_MODULE specifies where header files from this Makefile are installed,
+# i.e. dist/include/xpcomsample
+XPIDL_MODULE = 'xpcomtest'
+
+# CPP_SOURCES specifies C++ files to be built into a library.
+UNIFIED_SOURCES += [
+    'nsTest.cpp',
+    'nsTestModule.cpp',
+]
+
+# EXTRA_COMPONENTS installs components written JavaScript to
+# dist/bin/components
+EXTRA_COMPONENTS += [
+    'nsTest.js',
+    'nsTest.manifest',
+]
+
+# XPCOMBinaryComponent names the library generated by this makefile,
+# i.e. dist/bin/components/libxpcomsample.so
+XPCOMBinaryComponent('xpcomtest')
+
+RESOURCE_FILES.samples += [
+    'xpconnect-test.html',
+]
+
+# Need to link with CoreFoundation on Mac
+if CONFIG['MOZ_WIDGET_TOOLKIT'] == 'cocoa':
+    OS_LIBS += CONFIG['TK_LIBS']
+```
 
 <pre>
 $ cd MOZ_CEN
@@ -657,6 +864,37 @@ $ cd obj-YOUR-TARGET-XXXX/dist/bin
 $ ./run-mozilla.sh ./xpcshell
 </pre>
 
+<pre>
+js> const cTest = new Components.Constructor("@mozilla.org/test;1","nsITest");
+js> var test = new cTest();
+js> test.value
+hello world
+js> test.value="Mama"
+Mama
+js> test.value   
+Mama
+js> test.writeValue("Call my")
+Call my Mama
+foopy 5
+GetValue 8
+js> test.value
+Mama
+js> test.value="papa";
+papa
+js> test.writeValue("I need to call my")
+I need to call my papa
+foopy 5
+GetValue 8
+js> test.add(5,23)
+28
+js> test.sub(5,23)
+-18
+js> test.mul(5,23)
+115
+js> test.mul(test.add(5,23), test.sub(5,23));
+-504
+js> quit()
+</pre>
 
 
 ## Reference
