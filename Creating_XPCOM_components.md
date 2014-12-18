@@ -885,9 +885,9 @@ js> quit()
 ## Reference
 <a name="XPCOM" title="Creating XPCOM components" target="_blank" href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Guide/Creating_components">[1] Creating XPCOM components</a>
 
-<a name="" title="" target="_blank" href="">[2] abc</a>
+<a title="Creating a C++ XPCOM component" target="_blank" href="http://www.iosart.com/firefox/xpcom/">[2] Creating a C++ XPCOM component</a>
 
-<a name="" title="" target="_blank" href="">[3] abc</a>
+<a title="Create and implement an XPCOM component for the Firefox browser" target="_blank" href="http://www.ibm.com/developerworks/library/os-xpcomfirefox/">[3] Create and implement an XPCOM component for the Firefox browser</a>
 
 
 ## Manuscript
