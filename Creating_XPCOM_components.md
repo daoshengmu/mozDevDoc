@@ -1,6 +1,6 @@
 ## Prerequisite
 
-Before implementing XPCOM components from this tutorial, 
+Before implementing XPCOM components, 
 you need to get the firefox source code, 
 which is known as **mozilla-central**, from Mercurial or Git.
 The path of mozilla-central is denoted by **MOZ_CEN** from here.
@@ -110,7 +110,35 @@ js> quit()
 ## Creating your own XPCOM component
 
 - Making a dictionay for this XPCOM component
+<pre>
+$ cd MOZ_CEN/xpcom/
+$ mkdir sample2
+</pre>
 - Exposing the dictionary created to mozilla build system
+<pre>
+$ vim moz.build
+</pre>
+<pre>
+
+..
+..
+if CONFIG['OS_ARCH'] == 'WINNT' and CONFIG['MOZ_DEBUG']:
+    DIRS += ['windbgdlg']
+
+TEST_DIRS += [
+    'tests',
+    'sample',
+    'sample2',
+    'typelib/xpt/tests',
+]
+
+#  Can't build internal xptcall tests that use symbols which are not exported.
+#TEST_DIRS += [
+..
+..
+]
+</pre>
+
 - Writing a IDL file for your XPCOM component
   - Generating a UUID as your XPCOM component ID
   - Writing IDL for XPCOM component
