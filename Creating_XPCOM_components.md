@@ -1,3 +1,5 @@
+> This is an edited extract from https://codesugar.wordpress.com/2014/12/18/creating-xpcom-components/
+
 ## XPCOM
 https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Guide/Creating_components/An_Overview_of_XPCOM
 
