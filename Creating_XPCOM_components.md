@@ -201,7 +201,7 @@ and the template of its implementation is in the comment of it.
 $ vim MOZ_CEN/obj-xxxxx/dist/include/nsITest.h 
 </pre>
 
-```
+```cpp
 /*
  * DO NOT EDIT.  THIS FILE IS GENERATED FROM ../../../dist/idl/nsITest.idl
  */
