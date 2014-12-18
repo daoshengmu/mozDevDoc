@@ -336,7 +336,7 @@ the template /* Header file*/ in nsITest.h
 $ vim nsTest.h 
 </pre>
 
-```
+```cpp
 #ifndef nsTest_h
 #define nsTest_h
 
@@ -439,11 +439,41 @@ protected:
 };
 ```
 
+Next, writing the .cpp file
+
 <pre>
 $ vim nsTest.cpp 
 </pre>
 
+```cpp
+/**
+ * This file contains an implementation nsTest of the interface nsISample.
+ */
+#include <stdio.h>
 
+#include "nsTest.h"
+#include "nsMemory.h"
+
+#include "nsEmbedString.h"
+#include "nsIClassInfoImpl.h"
+////////////////////////////////////////////////////////////////////////
+
+nsTest::nsTest() : mValue(nullptr)
+{
+  mValue = (char*)nsMemory::Clone("hello world", 12);
+  //12 = strlen("hello world") + strlen('\0') = 11 + 1
+}
+
+nsTest::~nsTest()
+{
+  if (mValue) {
+    nsMemory::Free(mValue);
+  }
+}
+
+
+
+```
 
 ### Module file
 
