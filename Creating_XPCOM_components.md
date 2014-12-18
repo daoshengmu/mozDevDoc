@@ -118,6 +118,7 @@ $ mkdir sample2
 <pre>
 $ vim moz.build
 </pre>
+
 ```
 ..
 ..
@@ -130,6 +131,12 @@ TEST_DIRS += [
     'sample2',
     'typelib/xpt/tests',
 ]
+
+#Can not build internal xptcall tests that use symbols which are not exported.
+#TEST_DIRS += [
+..
+..
+
 ```
 
 - Writing a IDL file for your XPCOM component
