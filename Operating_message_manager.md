@@ -26,7 +26,7 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 
 
 ## Reference
-<a name="" title="" target="_blank" href="">[1] IPC Protocol Definition Language</a>
+<a name="" title="" target="_blank" href="">[1]</a>
 
 <a name="" title="" target="_blank" href="">[2]</a>
 
