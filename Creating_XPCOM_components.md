@@ -132,7 +132,7 @@ TEST_DIRS += [
     'typelib/xpt/tests',
 ]
 
-#  Can't build internal xptcall tests that use symbols which are not exported.
+#  Can not build internal xptcall tests that use symbols which are not exported.
 #TEST_DIRS += [
 ..
 ..
