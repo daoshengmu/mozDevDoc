@@ -713,78 +713,63 @@ $ uuidgen
 $ vim nsTest.js 
 </pre>
 
-```cpp
-#include "mozilla/ModuleUtils.h"
-#include "nsIClassInfoImpl.h"
+```javascript
+Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
-#include "nsTest.h"
+/**
+ * We set up a sample component. The constructor is empty, all the interesting
+ * stuff goes in the prototype.
+ */
+function myTest() { }
 
-////////////////////////////////////////////////////////////////////////
-// With the below sample, you can define an implementation glue
-// that talks with xpcom for creation of component nsTest
-// that implement the interface nsITest. This can be extended for
-// any number of components.
-////////////////////////////////////////////////////////////////////////
+myTest.prototype = {
+    /**
+     * .classID is required for generateNSGetFactory to work correctly.
+     * Make sure this CID matches the "component" in your .manifest file.
+     */
+    classID: Components.ID("{217f9cb2-7496-41ea-aa7c-b4270e1ad338}"),
 
-////////////////////////////////////////////////////////////////////////
-// Define the contructor function for the object nsTest
-//
-// What this does is defines a function nsTestConstructor which we
-// will specific in the nsModuleComponentInfo table. This function will
-// be used by the generic factory to create an instance of nsTest.
-//
-// NOTE: This creates an instance of nsTest by using the default
-//         constructor nsTest::nsTest()
-//
-NS_GENERIC_FACTORY_CONSTRUCTOR(nsTest)
+    /**
+     * .classDescription and .contractID are only used for
+     * backwards compatibility with Gecko 1.9.2 and
+     * XPCOMUtils.generateNSGetModule.
+     */
+    classDescription: "nsSample: JS version", // any human-readable string
+    contractID: "@mozilla.org/jstest;1",
 
-// The following line defines a kNS_TEST_CID CID variable.
-NS_DEFINE_NAMED_CID(NS_TEST_CID);
+    /**
+     * List all the interfaces your component supports.
+     * @note nsISupports is generated automatically; you don't need to list it.
+     */
+    QueryInterface: XPCOMUtils.generateQI([Components.interfaces.nsITest]),
 
-// Build a table of ClassIDs (CIDs) which are implemented by this module. CIDs
-// should be completely unique UUIDs.
-// each entry has the form { CID, service, factoryproc, constructorproc }
-// where factoryproc is usually nullptr.
-static const mozilla::Module::CIDEntry kTestCIDs[] = {
-  { &kNS_TEST_CID, false, nullptr, nsTestConstructor },
-  { nullptr }
+    /*
+     * get and set are new Magic in JS1.5, borrowing the intent -- if not
+     * the exact syntax -- from the JS2 design.  They define accessors for
+     * properties on the JS object, follow the expected rules for prototype
+     * delegation, and make a mean cup of coffee.
+     */
+    get value()       { return this.val; },
+    set value(newval) { return this.val = newval; },
+
+    writeValue: function (aPrefix) {
+        debug("myTest::writeValue => " + aPrefix + this.val + "\n");
+    },
+    add: function (a, b) { return a + b; },
+    sub: function (a, b) { return a - b; },
+    mul: function (a, b) { return a * b; },
+
+    val: "<default value>"
 };
 
-// Build a table which maps contract IDs to CIDs.
-// A contract is a string which identifies a particular set of functionality. In some
-// cases an extension component may override the contract ID of a builtin gecko component
-// to modify or extend functionality.
-static const mozilla::Module::ContractIDEntry kTestContracts[] = {
-  { NS_TEST_CONTRACTID, &kNS_TEST_CID },
-  { nullptr }
-};
-
-// Category entries are category/key/value triples which can be used
-// to register contract ID as content handlers or to observe certain
-// notifications. Most modules do not need to register any category
-// entries: this is just a sample of how you'd do it.
-// @see nsICategoryManager for information on retrieving category data.
-static const mozilla::Module::CategoryEntry kTestCategories[] = {
-  { "my-category", "my-key", NS_TEST_CONTRACTID },
-  { nullptr }
-};
-
-static const mozilla::Module kTestModule = {
-  mozilla::Module::kVersion,
-  kTestCIDs,
-  kTestContracts,
-  kTestCategories
-};
-
-// The following line implements the one-and-only "NSModule" symbol exported from this
-// shared library.
-NSMODULE_DEFN(nsTestModule) = &kTestModule;
-
-// The following line implements the one-and-only "NSGetModule" symbol
-// for compatibility with mozilla 1.9.2. You should only use this
-// if you need a binary which is backwards-compatible and if you use
-// interfaces carefully across multiple versions.
-NS_IMPL_MOZILLA192_NSGETMODULE(&kTestModule)
+/**
+ * XPCOMUtils.generateNSGetFactory was introduced in Mozilla 2 (Firefox 4).
+ * XPCOMUtils.generateNSGetModule is for Mozilla 1.9.2 (Firefox 3.6).
+ */
+if (XPCOMUtils.generateNSGetFactory)
+    this.NSGetFactory = XPCOMUtils.generateNSGetFactory([myTest]);
+else
+    var NSGetModule = XPCOMUtils.generateNSGetModule([myTest]);
 ```
 
 ### manifest file
