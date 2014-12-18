@@ -118,6 +118,80 @@ $ vim Hello.h
 </pre>
 
 ```cpp
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim:set ts=2 sw=2 sts=2 et cindent: */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#ifndef mozilla_dom_Hello_h
+#define mozilla_dom_Hello_h
+
+#include "mozilla/Attributes.h"
+#include "mozilla/ErrorResult.h"
+#include "nsCycleCollectionParticipant.h"
+#include "nsWrapperCache.h"
+
+#include "nsCOMPtr.h" // For already_AddRefed
+#include "mozilla/dom/BindingDeclarations.h" // For GlobalObject
+
+struct JSContext;
+
+namespace mozilla {
+namespace dom {
+
+class Hello MOZ_FINAL : public nsISupports /* Change nativeOwnership in the binding configuration if you don't want this */,
+                        public nsWrapperCache /* Change wrapperCache in the binding configuration if you don't want this */
+{
+public:
+  NS_DECL_CYCLE_COLLECTING_ISUPPORTS
+  NS_DECL_CYCLE_COLLECTION_SCRIPT_HOLDER_CLASS(Hello)
+
+public:
+  //Hello();
+  Hello(nsISupports* aParent);
+  Hello(nsISupports* aParent, const nsAString& aStr);
+
+private:
+  nsCOMPtr<nsISupports> mParent;
+  nsString hStr;
+
+protected:
+  ~Hello();
+
+public:
+  // TODO: return something sensible here, and change the return type
+  //Hello* GetParentObject() const;
+  nsISupports* GetParentObject() const { return mParent; }
+
+  virtual JSObject* WrapObject(JSContext* aCx) MOZ_OVERRIDE;
+
+  static already_AddRefed<Hello> Constructor(const GlobalObject& global, ErrorResult& aRv);
+  static already_AddRefed<Hello> Constructor(const GlobalObject& global, const nsAString& str, ErrorResult& aRv);
+
+  void GetHelloStr(nsString& aRetVal) const;
+
+  void SetHelloStr(const nsAString& arg);
+
+  void GetReadonlyStr(nsString& aRetVal) const;
+
+  void SayHello(nsString& aRetVal);
+
+  int32_t RandNum();
+
+  int32_t Add(int32_t a, int32_t b);
+
+  int32_t Sub(int32_t a, int32_t b);
+
+  int32_t Mul(int32_t a, int32_t b);
+
+  double Div(int32_t a, int32_t b, ErrorResult& aRv);
+};
+
+} // namespace dom
+} // namespace mozilla
+
+#endif // mozilla_dom_Hello_h
 ```
 
 
@@ -126,6 +200,136 @@ $ vim Hello.cpp
 </pre>
 
 ```cpp
+
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim:set ts=2 sw=2 sts=2 et cindent: */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#include "mozilla/dom/Hello.h"
+#include "mozilla/dom/HelloBinding.h"
+
+#include <cstdlib> // For rand() and srand()
+#include <ctime> // For time()
+
+namespace mozilla {
+namespace dom {
+
+
+NS_IMPL_CYCLE_COLLECTION_WRAPPERCACHE_0(Hello)
+NS_IMPL_CYCLE_COLLECTING_ADDREF(Hello)
+NS_IMPL_CYCLE_COLLECTING_RELEASE(Hello)
+NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION(Hello)
+  NS_WRAPPERCACHE_INTERFACE_MAP_ENTRY
+  NS_INTERFACE_MAP_ENTRY(nsISupports)
+NS_INTERFACE_MAP_END
+
+//Hello::Hello()
+Hello::Hello(nsISupports* aParent):mParent(aParent)
+{
+}
+
+Hello::Hello(nsISupports* aParent, const nsAString& aStr):mParent(aParent), hStr(aStr)
+{
+}
+
+Hello::~Hello()
+{
+}
+
+void
+Hello::GetHelloStr(nsString& aRetVal) const
+{
+  //aRetVal = (hStr)? hStr : new nsString(NS_LITERAL_STRING("empty"));
+  aRetVal = hStr;
+}
+
+void
+Hello::SetHelloStr(const nsAString& arg)
+{
+  /*
+  if(arg){
+      hStr.AssignWithConversion(arg);
+  }
+  */
+  hStr.Assign(arg);
+}
+
+void
+Hello::GetReadonlyStr(nsString& aRetVal) const
+{
+  aRetVal = nsString(NS_LITERAL_STRING("This string can be read only!"));
+}
+
+void
+Hello::SayHello(nsString& aRetVal)
+{
+  aRetVal = nsString(NS_LITERAL_STRING("Hello FireFox!"));
+}
+
+int32_t
+Hello::RandNum()
+{
+  //std::srand(std::time(0));//Use current time as seed for random generator
+  static bool init = false;
+  if(!init){
+    std::srand(std::time(0));//Use current time as seed for random generator
+    init = true;
+  }
+}
+
+int32_t
+Hello::Add(int32_t a, int32_t b)
+{
+  return a + b;
+}
+
+int32_t
+Hello::Sub(int32_t a, int32_t b)
+{
+  return a - b;
+}
+
+int32_t
+Hello::Mul(int32_t a, int32_t b)
+{
+  return a * b;
+}
+
+double
+Hello::Div(int32_t a, int32_t b, ErrorResult& aRv)
+{
+  if(!b){
+    //Throws an error here
+  }
+  return (double)a / b;
+}
+
+JSObject*
+Hello::WrapObject(JSContext* aCx)
+{
+  return HelloBinding::Wrap(aCx, this);
+}
+
+/* static */ already_AddRefed<Hello>
+Hello::Constructor(const GlobalObject& global, ErrorResult& aRv)
+{
+  nsRefPtr<Hello> obj = new Hello(global.GetAsSupports());
+  return obj.forget();
+}
+
+/* static */ already_AddRefed<Hello>
+Hello::Constructor(const GlobalObject& global, const nsAString& str, ErrorResult& aRv)
+{
+  nsRefPtr<Hello> obj = new Hello(global.GetAsSupports(), str);
+  return obj.forget();
+}
+
+
+
+} // namespace dom
+} // namespace mozilla
 ```
 
 
