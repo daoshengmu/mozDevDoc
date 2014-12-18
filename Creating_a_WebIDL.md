@@ -1,3 +1,5 @@
+> This is an edited extract from https://codesugar.wordpress.com/2014/12/18/creating-a-webidl/ 
+
 ## WebIDL
 
 
