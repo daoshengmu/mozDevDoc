@@ -97,18 +97,160 @@ $ ./mach webidl-example Hello
 
 ### Completing the implematation from template
 
-The template code will be named **Hello-example.{.h,.cpp}**
-in **MOZ_CEN/obj-xxxxx/dom/bindings/**
+The template code will be named **Hello-example.{h,cpp}**
+in **MOZ_CEN/obj-xxxxx/dom/bindings/**.
+After generating, you should now complete the implementation of this WebIDL.
+
+<pre>
+# move files outputed to “MOZ_CEN/dom/hello”
+$ cd dom/
+$ mkdir hello
+$ cd hello
+$ mv ../../obj-xxxxx/dom/bindings/Hello-example.* .
+
+# Rename
+$ mv Hello-example.h Hello.h
+$ mv Hello-example.cpp Hello.cpp
+</pre>
+
+<pre>
+$ vim Hello.h
+</pre>
+
+<pre>
+$ vim Hello.cpp
+</pre>
+
 
 
 ### Adding information about your WebIDL to firefox build system
+
+<pre>
+# add the moz.build in folder hello
+$ vim moz.build
+</pre>
+
+```
+EXPORTS.mozilla.dom += [
+    'Hello.h',
+]
+UNIFIED_SOURCES += [
+    'Hello.cpp',
+]
+
+FAIL_ON_WARNINGS = True
+FINAL_LIBRARY = 'xul'
+```
+
+<pre>
+# add folder “hello” to dom/moz.build
+$ cd ..
+$ vim moz.build
+</pre>
+
+```
+..
+..
+DIRS += [
+  ..
+  ..
+  'geolocation',
+  'hello',
+  'html',
+   ..
+   ..
+]
+..
+..
+```
 
 
 ## Testing your WebIDL from web page
 
 ### Writing a html file for testing
 
+<pre>
+$ cd MOZ_CEN
+$ vim testHello.html
+</pre>
+
+```html
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>hello test</title>
+    <script>
+        funcInit = function(){
+            // After DOM has beem loaded....
+            console.log("DOM has been loaded...");
+            var btnElement = document.querySelector('#btn');
+            btn.addEventListener('click', clickHandler);
+
+        }
+        document.addEventListener('DOMContentLoaded', funcInit);
+
+        function sleep(ms){
+            var starttime= new Date().getTime();
+            do{}while((new Date().getTime()-starttime)<ms)
+        }
+
+        console.log("test page is starting...");
+
+        var clickHandler = function(){
+            console.log("click trigger");
+            var h = new Hello();
+            //var h = new Hello("Init in JS");
+
+            console.log("sayHello : " + h.sayHello());
+
+            console.log("helloStr : " + h.helloStr);
+            h.helloStr = null;
+            console.log("helloStr : " + h.helloStr);
+            h.helloStr = "Be modified by web";
+            console.log("helloStr : " + h.helloStr);
+
+            console.log("readonlyStr : " + h.readonlyStr);
+            h.readonlyStr = "Also be modified by web";
+            console.log("readonlyStr : " + h.readonlyStr);
+
+            var x = h.randNum();
+            var y = h.randNum();
+            console.log(x + " + " + y + " = " + h.add(x,y));
+            console.log(x + " - " + y + " = " + h.sub(x,y));
+            console.log(x + " * " + y + " = " + h.mul(x,y));
+            try{
+                console.log(x + " / " + y + " = " + h.div(x,y));
+                y = 0;
+                console.log(x + " / " + y + " = " + h.div(x,y));
+            }catch(err){
+                console.log(err);
+                if(err.name == "NS_ERROR_ILLEGAL_VALUE"){
+                    console.log("Can NOT divide by zero!");
+                }
+            }finally{
+                console.log("Finish testing");
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <H1>Test Page</H1>
+    <button id="btn">click me</button>
+</body>
+</html>
+```
+
 ### Getting the results
+<pre>
+$ ./mach run testHello.html
+</pre>
+
+After the firefox nightly start running, 
+you need to open the ****(press the <F12> or Rightclick->Inspect Element)
 
 
 ## Reference
