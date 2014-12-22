@@ -124,7 +124,7 @@ $ ./mach mochitest-plain dom/events/test/test_dom_before_after_keyboard_event.ht
 If you're a FxOS developer, you can try message manager in it.
 We plan to inject our code by following steps:
 
-1.Find the chrome code of FxOS
+1.  Find the chrome code of FxOS
   
   1.1  Search **ppmm**(parent process message manager) on <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/search?q=ppmm&case=false">dxr</a>
 
@@ -132,9 +132,9 @@ We plan to inject our code by following steps:
   
   1.2  Look <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/source/b2g/chrome/content/shell.js#345">what kind of events</a> used in ppmm.addMessageListener
 
-2.Find the related content code
+2.  Find the related content code
 
-3.Inject your code in chrome process and content process
+3.  Inject your code in chrome process and content process
 
 
 
