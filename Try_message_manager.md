@@ -142,7 +142,7 @@ We plan to inject our code by following steps:
   - Inject your code in B2G/gecko/b2g/components/MailtoProtocolHandler.js
   - MailtoProtocolHandler.js will be triggered 
   when you click the **mailto** hyperlink like 
-  ```<a href="mailto:@example.com>Hello</a>```
+  ```<a href="mailto:who@example.com>Hello</a>```
 
 ### Inject your test code in chrome and content
 
@@ -190,10 +190,41 @@ newChannel: function Proto_newChannel(aURI) {
 ```
 
 ### Installing your code into FxOS device
+
+Connect your device to PC via USB and type:
 <pre>
 $ cd B2G
 $./build.sh
 $./flash.sh
+</pre>
+
+After installing FxOS into your devices, 
+you should finish your setting and enable the network.
+Next, open the browser and find one website that contains a mailto hyperlink like
+```<a href="mailto:who@example.com">Hello</a>```.
+
+### See the results
+<pre>
+$ adb logcat | more
+</pre>
+After typing the command above, 
+you will see a lot of log message in your screen.
+All you need to do now is press *space* to the end of the log message.
+Then, you can click the **mailto** hyperlink to trigger this event!
+<pre>
+...
+...
+I/GeckoDump(  308):
+I/GeckoDump(  308):
+I/GeckoDump(  308): -------------------------
+I/GeckoDump(  308):
+I/GeckoDump(  308): [Dad] Hi! Child! You say: Good night
+I/GeckoDump(  308):
+I/GeckoDump(  308):
+I/GeckoDump(  308): -------------------------
+I/GeckoDump(  308):
+...
+...
 </pre>
 
 
