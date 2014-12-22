@@ -21,7 +21,7 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 
 ## Terminology
 
-- MOZ_CEN
+- MOZ_CEN: the path of mozilla-central project
 
 
 ## Concept
