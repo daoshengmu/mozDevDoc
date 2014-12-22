@@ -119,8 +119,6 @@ $ ./mach mochitest-plain dom/events/test/test_dom_before_after_keyboard_event.ht
 
 <a name="mm" title="The message manager" target="_blank" href="https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/The_message_manager">[2] The message manager</a>
 
-<a name="" title="" target="_blank" href="">[3]</a>
-
 
 ## Manuscript
 <a title="Google Doc" target="_blank" href="">click here</a>
