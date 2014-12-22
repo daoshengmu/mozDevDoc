@@ -35,6 +35,12 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 
 ## Try message manager in bug989198_helper.js
 
+<pre>
+$ cd MOZ_CEN/dom/events/test
+$ vim bug989198_helper.js
+</pre>
+
+
 ### Injecting your test code frameScript()
 
 ```javascript
@@ -93,7 +99,21 @@ function prepareTest(useRemote)
 
 <pre>
 $ cd MOZ_CEN
-$ ./mach run 
+
+# the bug989198_helper.js is included in 
+# dom/events/test/test_dom_before_after_keyboard_event.html
+ 
+$ ./mach mochitest-plain dom/events/test/test_dom_before_after_keyboard_event.html
+
+…
+…
+-------------------------------
+[Dad] Hi! Child! You say: Good night
+-------------------------------
+[child] get: Good Child
+-------------------------------
+…
+…
 </pre>
 
 ## Reference
