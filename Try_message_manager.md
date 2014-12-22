@@ -12,6 +12,7 @@ the message manager part of [[1]](#e10sOverview) and [[2]](#mm).
 
 ## Prerequisite
 
+### mozilla-central
 Before operating the message manager, 
 you need to get the firefox source code, 
 which is known as **mozilla-central**, from Mercurial or Git.
@@ -22,11 +23,14 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 - Mercurial : https://hg.mozilla.org/mozilla-central/
 - Git : https://github.com/mozilla/mozilla-central
 
+### Firefox OS
+
 
 ## Terminology
 
 - MOZ_CEN: The path of mozilla-central project
-
+- FxOS: Firefox OS
+- B2G: Firefox OS
 
 ## Concept
 
@@ -138,7 +142,7 @@ We plan to inject our code by following steps:
   - Inject your code in B2G/gecko/b2g/components/MailtoProtocolHandler.js
   - MailtoProtocolHandler.js will be triggered 
   when you click the **mailto** hyperlink like 
-  ```<a href="mailto:@example.com ?subject=Hello">World</a>```
+  ```<a href="mailto:@example.com>Hello</a>```
 
 ### Inject your test code in chrome and content
 
@@ -147,11 +151,50 @@ $ cd B2G/gecko
 $ vim b2g/chrome/content/shell.js
 </pre>
 
+```javascript
+...
+...
+    ppmm.addMessageListener("mail-handler", this);
+    ppmm.addMessageListener("file-picker", this);
+    ppmm.addMessageListener("DearDad", function(msg){
+          dump('\n\n-------------------------\n\n');
+          dump("[Dad] Hi! Child! You say: " + msg.data.say);
+          dump('\n\n-------------------------\n\n');
+    });  
+  },
+
+  stop: function shell_stop() {
+...
+...
+```
+
+
 <pre>
 $ cd B2G/gecko
 $ vim b2g/components/MailtoProtocolHandler.js
 </pre>
 
+```javascript
+...
+...
+newChannel: function Proto_newChannel(aURI) {
+    cpmm.sendAsyncMessage("DearDad", {say: "Good night"});
+    cpmm.sendAsyncMessage("mail-handler", {
+      URI: aURI.spec,
+      type: "mail" });
+
+    throw Components.results.NS_ERROR_ILLEGAL_VALUE;
+  },
+...
+...
+```
+
+### Installing your code into FxOS device
+<pre>
+$ cd B2G
+$./build.sh
+$./flash.sh
+</pre>
 
 
 ## Reference
