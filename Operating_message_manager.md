@@ -41,7 +41,7 @@ $ vim bug989198_helper.js
 </pre>
 
 
-### Injecting your test code frameScript()
+### Injecting your test code in frameScript()
 
 ```javascript
 ...
@@ -102,9 +102,7 @@ $ cd MOZ_CEN
 
 # the bug989198_helper.js is included in 
 # dom/events/test/test_dom_before_after_keyboard_event.html
- 
 $ ./mach mochitest-plain dom/events/test/test_dom_before_after_keyboard_event.html
-
 …
 …
 -------------------------------
