@@ -125,18 +125,14 @@ If you're a FxOS developer, you can try message manager in it.
 We plan to inject our code by following steps:
 
 1.  Find the chrome code of FxOS
-  
   - Search **ppmm**(parent process message manager) on <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/search?q=ppmm&case=false">dxr</a>
   - Choose <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/source/b2g/chrome/content/shell.js">b2g/chrome/content/shell.js</a> here
   - Look <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/source/b2g/chrome/content/shell.js#345">what kind of events</a> used in ppmm.addMessageListener
   - Choose <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/source/b2g/chrome/content/shell.js#348">mail-handler</a> event here
-
 2.  Find the related content code
-
   - Search **mail-handler** on <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/search?q=mail-handler&case=false">dxr</a> 
   - Choose <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/source/b2g/components/MailtoProtocolHandler.js">b2g/components/MailtoProtocolHandler.js</a> here
-
-3.  Inject your code in chrome process and content process
+3.  Inject your code in chrome and content
 
 
 
