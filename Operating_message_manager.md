@@ -30,7 +30,71 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 
 ## Concept
 
+<a target="_blank" href="https://docs.google.com/a/mozilla.com/presentation/d/1Lu3_1yvYN1dFGiHM6VVVpTPA9LXfH7ZgSGJfH07rHXA/edit?usp=sharing">Multiprocess Firefox(e10s)<a/>
 
+
+## Try message manager in bug989198_helper.js
+
+### Injecting your test code frameScript()
+
+```javascript
+...
+...
+function frameScript()
+{
+  function handler(e) {
+    var results = sendSyncMessage("forwardevent", { type: e.type });
+    if (results[0]) {
+      e.preventDefault();
+    }
+  
+    var res = sendSyncMessage("DearDad", {say: "Good night"});
+    dump( "[child] get: " + ((res[0])? res[0]:"nothing!"));
+    dump('\n-------------------------------\n');
+  }
+
+  
+  addEventListener('keydown', handler);
+  ...
+  ...
+}
+...
+...
+```
+
+### Add event listener
+
+```javascript
+...
+...
+function prepareTest(useRemote)
+{
+...
+...
+    mm.loadFrameScript("data:,(" + frameScript.toString() + ")();", false);
+
+
+    mm.addMessageListener("DearDad", function(m){
+      dump('\n-------------------------------\n');
+      //dump(JSON.stringify(m));
+      dump("[Dad] Hi! Child! You say: " + m.data.say);
+      /* mm.sendAsyncMessage('DearChild', {say:"good morning"}); */
+      dump('\n-------------------------------\n');
+      return "Good Child";
+    });
+
+    runTests();
+...
+...
+}
+...
+...
+```
+
+<pre>
+$ cd MOZ_CEN
+$ ./mach run 
+</pre>
 
 ## Reference
 <a name="e10sOverview" title="e10s overview" target="_blank" href="https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Technical_overview">[1] e10s Technical Overview</a>
