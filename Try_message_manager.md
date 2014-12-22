@@ -133,6 +133,24 @@ We plan to inject our code by following steps:
   - Search **mail-handler** on <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/search?q=mail-handler&case=false">dxr</a> 
   - Choose <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/source/b2g/components/MailtoProtocolHandler.js">b2g/components/MailtoProtocolHandler.js</a> here
 3.  Inject your code in chrome and content
+  - The code in MOZ_CEN is same as the code in B2G/gecko
+  - Inject your code in B2G/gecko/b2g/chrome/content/shell.js
+  - Inject your code in B2G/gecko/b2g/components/MailtoProtocolHandler.js
+  - MailtoProtocolHandler.js will be triggered 
+  when you click the **mailto** hyperlink like 
+  ```<a href="mailto:@example.com ?subject=Hello">World</a>```
+
+### Inject your test code in chrome and content
+
+<pre>
+$ cd B2G/gecko
+$ vim b2g/chrome/content/shell.js
+</pre>
+
+<pre>
+$ cd B2G/gecko
+$ vim b2g/components/MailtoProtocolHandler.js
+</pre>
 
 
 
