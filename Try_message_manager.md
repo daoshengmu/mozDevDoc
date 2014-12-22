@@ -33,7 +33,11 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 <a target="_blank" href="https://docs.google.com/a/mozilla.com/presentation/d/1Lu3_1yvYN1dFGiHM6VVVpTPA9LXfH7ZgSGJfH07rHXA/edit?usp=sharing">Multiprocess Firefox(e10s)<a/>
 
 
-## Try message manager in bug989198_helper.js
+## Try message manager in mochitest
+
+The file used here is MOZ_CEN/dom/events/test/**bug989198_helper.js**.
+It already use message manager to do some tests, 
+so we can inject our code into it.
 
 <pre>
 $ cd MOZ_CEN/dom/events/test
@@ -114,6 +118,21 @@ $ ./mach mochitest-plain dom/events/test/test_dom_before_after_keyboard_event.ht
 …
 </pre>
 
+
+## Try message manager in FxOS(B2G)
+
+If you're a FxOS developer, you can try message manager in it.
+We plan to inject our code by following steps:
+
+1.Find the chrome code of FxOS and inject your code there
+  1.1 Search **ppmm**(parent process message manager) on <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/search?q=ppmm&case=false">dxr</a>
+    we choose <a target="_blank" href="http://dxr.mozilla.org/mozilla-central/source/b2g/chrome/content/shell.js">b2g/chrome/content/shell.js</a> here
+  1.2 Look <a target="_blank" href="">what kind of events</a> used in ppmm.addMessageListener
+3.Find the related content code and inject your code there
+
+
+
+
 ## Reference
 <a name="e10sOverview" title="e10s overview" target="_blank" href="https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Technical_overview">[1] e10s Technical Overview</a>
 
@@ -121,4 +140,4 @@ $ ./mach mochitest-plain dom/events/test/test_dom_before_after_keyboard_event.ht
 
 
 ## Manuscript
-<a title="Google Doc" target="_blank" href="">click here</a>
+<a title="Google Doc" target="_blank" href="https://docs.google.com/a/mozilla.com/document/d/1yZ3X5XVzZws_14BYVj58tTKTnDMl8ZXY5z-vtTiP1_4/edit?usp=sharing">click here</a>
