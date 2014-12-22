@@ -1,4 +1,9 @@
 ## Message Manager
+>Message managers provide a way for chrome-privileged JavaScript code 
+>to communicate across process boundaries. 
+>They are particularly useful for allowing chrome code, 
+>including the browser's own code and extension code, 
+>to access web content when the browser is running web content in a separate process.
 
 
 ## About this article
