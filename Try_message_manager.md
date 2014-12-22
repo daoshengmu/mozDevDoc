@@ -24,13 +24,14 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 - Git : https://github.com/mozilla/mozilla-central
 
 ### Firefox OS
-
+https://github.com/ChunMinChang/mozDevDoc/blob/master/Building_and_installing_Firefox_OS.md
 
 ## Terminology
 
 - MOZ_CEN: The path of mozilla-central project
-- FxOS: Firefox OS
-- B2G: Firefox OS
+- FxOS: Abbreviation of Firefox OS
+- B2G: The original project name of Firefox OS. 
+  However, the B2G here is the path of FxOS project
 
 ## Concept
 
