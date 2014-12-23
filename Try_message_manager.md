@@ -24,6 +24,8 @@ The path of mozilla-central is denoted by **MOZ_CEN** from here.
 - Git : https://github.com/mozilla/mozilla-central
 
 ### Firefox OS
+You need to have a Firefox OS repository and a Firefox OS compatible device.
+See more here:
 https://github.com/ChunMinChang/mozDevDoc/blob/master/Building_and_installing_Firefox_OS.md
 
 ## Terminology
@@ -144,6 +146,8 @@ We plan to inject our code by following steps:
   - MailtoProtocolHandler.js will be triggered 
   when you click the **mailto** hyperlink like 
   ```<a href="mailto:who@example.com>Hello</a>```
+  - Install the code into FxOS device
+  - Dump the log message by ```$adb logcat```
 
 ### Inject your test code in chrome and content
 
