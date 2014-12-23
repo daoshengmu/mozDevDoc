@@ -40,6 +40,14 @@ https://github.com/ChunMinChang/mozDevDoc/blob/master/Building_and_installing_Fi
 <a target="_blank" href="https://docs.google.com/a/mozilla.com/presentation/d/1Lu3_1yvYN1dFGiHM6VVVpTPA9LXfH7ZgSGJfH07rHXA/edit?usp=sharing">Multiprocess Firefox(e10s)<a/>
 
 
+## Setup firefox in multiprocess mode
+
+1. Open firefox nightly by ```$ ./mach run```
+2. Enter *about:config* on URL
+3. Click the button: *I'll be careful, I promise!*
+4. Search *browser.tabs.remote.autostart* and set it to *true*
+
+
 ## Try message manager in mochitest
 
 The file used here is MOZ_CEN/dom/events/test/**bug989198_helper.js**.
