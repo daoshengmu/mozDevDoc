@@ -1,4 +1,3 @@
-
 ## IPDL
 IPC Protocol Definition Language
 
