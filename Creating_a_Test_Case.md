@@ -11,10 +11,10 @@ This is an article about how to create a test case and use mochitest. The more d
 ## Writing the test 
 - Where to put the test <br>
 Add your test file to the closest test folder you can find e.g, dom/alarm/test. Only create the new directory when you are creating the new feature.
-The following article demostrates crating test in new directory.
+The following article demostrates creating test in new directory.
 \-b is the bug number and \-type decide the template type. The name of test file must start with "test_".
 
-###Crate test template
+###Create test template
 
 <pre>
 $ mkdir -p MOZ_CEN/dom/helloTest/test
