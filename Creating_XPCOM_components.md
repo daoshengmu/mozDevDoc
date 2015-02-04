@@ -742,7 +742,7 @@ myTest.prototype = {
      * backwards compatibility with Gecko 1.9.2 and
      * XPCOMUtils.generateNSGetModule.
      */
-    classDescription: "nsSample: JS version", // any human-readable string
+    classDescription: "nsTest: JS version", // any human-readable string
     contractID: "@mozilla.org/jstest;1",
 
     /**
